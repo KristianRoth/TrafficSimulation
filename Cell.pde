@@ -99,7 +99,7 @@ class Cell {
 			bg.noFill();
 			bg.rect(-sizeOfCell/2, -sizeOfCell/2, sizeOfCell, sizeOfCell);
 		}
-		
+
 
 		bg.popMatrix();
 	}

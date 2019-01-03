@@ -25,7 +25,7 @@ void draw() {
 		if (world.isGood()) {
 			break;
 		}
-		s++;	
+		s++;
 	}
 	println(s);
 

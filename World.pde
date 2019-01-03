@@ -1,5 +1,5 @@
 class World {
-	
+
 	int numberOfCities = 10;
 	int numberOfInitialJunctions = 3;
 	int minDistJunctions = 5;

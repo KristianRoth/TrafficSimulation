@@ -16,7 +16,7 @@ class World {
 
 		for (int i = 0; i < cells.length; i++) {
 			for (int j = 0; j < cells[i].length; ++j) {
-				cells[i][j] = new Cell(i, j);
+				cells[i][j] = new Cell(cells, i, j);
 			}
 		}
 
@@ -61,7 +61,6 @@ class World {
 			for (Cell cell : rows) {
 				if (cell.isJunction()){
 					junctions.add(cell);
-					cell.highlite(true);
 				}
 			}
 		}
@@ -98,7 +97,7 @@ class World {
 
 		for (Cell[] rows : cells) {
 			for (Cell cell : rows) {
-				cell.draw(bg);
+				cell.drawBackground(bg);
 			}
 		}
 		bg.endDraw();
@@ -107,7 +106,19 @@ class World {
 
 	void draw() {
 		image(background, 0, 0);
+
+    for (Cell[] rows : cells) {
+			for (Cell cell : rows) {
+				cell.draw();
+			}
+		}
+
 	}
+
+  void update() {
+    println("update world");
+    new Car(this);
+  }
 
 	void makeRoad(Cell c1, Cell c2) {
 		int minX = min(c1.x, c2.x);
@@ -149,4 +160,15 @@ class World {
 
 	}
 
+  Cell[][] getCells() {
+    return cells;
+  }
+
+  Cell[] getCities() {
+    return cities;
+  }
+
+  ArrayList<Cell> getJunctions() {
+    return junctions;
+  }
 }

@@ -29,12 +29,12 @@ void draw() {
 	}
 	println(s);
 
+  world.update();
 	world.draw();
 	println(frameRate);
 }
 
 void keyPressed() {
-	println("var: ");
+  println("redraw");
 	redraw();
-	println("test");
 }

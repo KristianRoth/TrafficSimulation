@@ -2,6 +2,8 @@ class Cell {
 	int x, y;
 	int state;
 
+  Cell[][] cells;
+
 	boolean highlite = false;
 
 	static final int EMPTY = 0;
@@ -12,7 +14,8 @@ class Cell {
 	boolean[] roads = {false, false, false, false};
 
 
-	Cell(int x, int y) {
+	Cell(Cell[][] cells, int x, int y) {
+    this.cells = cells;
 		this.x = x;
 		this.y = y;
 		state = EMPTY;
@@ -33,9 +36,9 @@ class Cell {
 		}
 	}
 
-	void highlite(boolean h) {
-		highlite = h;
-	}
+  void highlite(boolean h) {
+  	highlite = h;
+  }
 
 	boolean isJunction() {
 		int sum = 0;
@@ -47,7 +50,27 @@ class Cell {
 		return sum >=3;
 	}
 
-	void draw(PGraphics bg) {
+  ArrayList<Cell> getRoads() {
+    ArrayList<Cell> roadCells = new ArrayList<Cell>();
+    if (roads[0]) {
+      roadCells.add(cells[x][y-1]);
+    }
+
+    if (roads[1]) {
+      roadCells.add(cells[x-1][y]);
+    }
+
+    if (roads[2]) {
+      roadCells.add(cells[x+1][y]);
+    }
+
+    if (roads[3]) {
+      roadCells.add(cells[x][y+1]);
+    }
+    return roads;
+  }
+
+	void drawBackground(PGraphics bg) {
 		bg.pushMatrix();
 		bg.translate(x*sizeOfCell+sizeOfCell/2, y*sizeOfCell+sizeOfCell/2);
 
@@ -92,15 +115,23 @@ class Cell {
 				break;
 		}
 
-
-
-		if (highlite) {
-			bg.stroke(255, 0, 0);
-			bg.noFill();
-			bg.rect(-sizeOfCell/2, -sizeOfCell/2, sizeOfCell, sizeOfCell);
-		}
-
-
 		bg.popMatrix();
 	}
+
+  void draw() {
+		pushMatrix();
+		translate(x*sizeOfCell+sizeOfCell/2, y*sizeOfCell+sizeOfCell/2);
+
+    if (highlite) {
+      stroke(255, 0, 0);
+      noFill();
+      rect(-sizeOfCell/2, -sizeOfCell/2, sizeOfCell, sizeOfCell);
+    }
+
+    popMatrix();
+  }
+
+  String toString() {
+    return "x: " + x + " y: " + y + " State: " + state;
+  }
 }

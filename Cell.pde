@@ -5,6 +5,7 @@ class Cell {
   Cell[][] cells;
 
 	boolean highlite = false;
+	int hColor = color(255, 0, 0);
 
 	static final int EMPTY = 0;
 	static final int CITY = 1;
@@ -36,9 +37,16 @@ class Cell {
 		}
 	}
 
-  void highlite(boolean h) {
-  	highlite = h;
-  }
+	void highlite(int r, int g, int b) {
+		highlite = true;
+		hColor = color(r, g, b);
+	}
+
+	void highlite(boolean t) {
+		highlite = t;
+	}
+
+
 
 	boolean isJunction() {
 		int sum = 0;
@@ -52,22 +60,22 @@ class Cell {
 
   ArrayList<Cell> getRoads() {
     ArrayList<Cell> roadCells = new ArrayList<Cell>();
-    if (roads[0]) {
+    if (roads[0]) {
       roadCells.add(cells[x][y-1]);
     }
 
-    if (roads[1]) {
+    if (roads[1]) {
       roadCells.add(cells[x-1][y]);
     }
 
-    if (roads[2]) {
+    if (roads[2]) {
       roadCells.add(cells[x+1][y]);
     }
 
-    if (roads[3]) {
+    if (roads[3]) {
       roadCells.add(cells[x][y+1]);
     }
-    return roads;
+    return roadCells;
   }
 
 	void drawBackground(PGraphics bg) {
@@ -123,7 +131,7 @@ class Cell {
 		translate(x*sizeOfCell+sizeOfCell/2, y*sizeOfCell+sizeOfCell/2);
 
     if (highlite) {
-      stroke(255, 0, 0);
+      stroke(hColor);
       noFill();
       rect(-sizeOfCell/2, -sizeOfCell/2, sizeOfCell, sizeOfCell);
     }

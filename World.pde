@@ -2,7 +2,7 @@ class World {
 
 	int numberOfCities = 10;
 	int numberOfInitialJunctions = 3;
-	int minDistJunctions = 5;
+	int minDistJunctions = 2;
 	int minJunctions = 3;
 
 	Cell[][] cells = new Cell[gridWidth][gridHeight];
@@ -117,7 +117,16 @@ class World {
 
   void update() {
     println("update world");
-    new Car(this);
+    Car car1 = new Car(this);
+    for (Cell cell : car1.getRoute()) {
+    	cell.highlite(255, 0, 0);
+    }
+
+    Car car2 = new Car(this);
+    for (Cell cell : car2.getRoute()) {
+    	cell.highlite(0, 255, 0);
+    }
+
   }
 
 	void makeRoad(Cell c1, Cell c2) {

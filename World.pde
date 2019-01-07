@@ -1,14 +1,18 @@
+import java.util.Iterator;
 class World {
 
 	int numberOfCities = 10;
 	int numberOfInitialJunctions = 3;
-	int minDistJunctions = 2;
+  int numberOfCars = 10;
+  int minDistJunctions = 2;
 	int minJunctions = 3;
+
 
 	Cell[][] cells = new Cell[gridWidth][gridHeight];
 
 	Cell[] cities = new Cell[numberOfCities];
 	ArrayList<Cell> junctions = new ArrayList<Cell>();
+  ArrayList<Car> cars = new ArrayList<Car>();
 
 	PGraphics background;
 
@@ -66,8 +70,11 @@ class World {
 		}
 
 		background = getBack();
-		// for (PVector junction : junctions)
-	}
+
+    for (int i = 0; i < numberOfCars; i++) {
+			cars.add(new Car(this));
+		}
+  }
 
 	boolean isGood() {
 		if (junctions.size() <= minJunctions) {
@@ -88,11 +95,11 @@ class World {
 		bg.beginDraw();
 		bg.stroke(0);
 		for (int i = sizeOfCell; i < height; i += sizeOfCell) {
-			//bg.line(0, i, width, i);
+			bg.line(0, i, width, i);
 		}
 
 		for (int i = sizeOfCell; i < width; i += sizeOfCell) {
-			//bg.line(i , 0, i, height);
+			bg.line(i , 0, i, height);
 		}
 
 		for (Cell[] rows : cells) {
@@ -113,20 +120,28 @@ class World {
 			}
 		}
 
+    for (Car car : cars) {
+      car.draw();
+    }
+
 	}
 
   void update() {
-    println("update world");
-    Car car1 = new Car(this);
-    for (Cell cell : car1.getRoute()) {
-    	cell.highlite(255, 0, 0);
+
+    if (frameCount%5 == 0) {
+      cars.add(new Car(this));
+    }
+    for (Car car : cars) {
+      car.update();
     }
 
-    Car car2 = new Car(this);
-    for (Cell cell : car2.getRoute()) {
-    	cell.highlite(0, 255, 0);
+    Iterator<Car> it = cars.iterator();
+    while (it.hasNext()) {
+      Car car = it.next();
+      if (car.arrived()) {
+        it.remove();
+      }
     }
-
   }
 
 	void makeRoad(Cell c1, Cell c2) {

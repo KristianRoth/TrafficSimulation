@@ -82,27 +82,28 @@ class Cell {
 		bg.pushMatrix();
 		bg.translate(x*sizeOfCell+sizeOfCell/2, y*sizeOfCell+sizeOfCell/2);
 
-		bg.noStroke();
-		bg.fill(100);
+    // bg.strokeCap;
+    bg.stroke(100);
+    bg.strokeWeight(3);
 
-		if (roads[0]) {
-			bg.rect(-sizeOfCell/6, -sizeOfCell/2, sizeOfCell/9, sizeOfCell/2+sizeOfCell/7);
-			bg.rect(sizeOfCell/18, -sizeOfCell/2, sizeOfCell/9, sizeOfCell/2+sizeOfCell/7);
+    if (roads[0]) {
+      bg.line(sizeOfCell/6, -sizeOfCell/2, sizeOfCell/6, sizeOfCell/6);
+      bg.line(-sizeOfCell/6, -sizeOfCell/2, -sizeOfCell/6, sizeOfCell/6);
 		}
 
 		if (roads[3]) {
-			bg.rect(-sizeOfCell/6, -sizeOfCell/6, sizeOfCell/9, sizeOfCell/2+sizeOfCell/6);
-			bg.rect(sizeOfCell/18, -sizeOfCell/6, sizeOfCell/9, sizeOfCell/2+sizeOfCell/6);
+      bg.line(sizeOfCell/6, sizeOfCell/2, sizeOfCell/6, -sizeOfCell/6);
+      bg.line(-sizeOfCell/6, sizeOfCell/2, -sizeOfCell/6, -sizeOfCell/6);
 		}
 
 		if (roads[1]) {
-			bg.rect(-sizeOfCell/2, -sizeOfCell/6, sizeOfCell/2+sizeOfCell/7, sizeOfCell/9);
-			bg.rect(-sizeOfCell/2, sizeOfCell/18, sizeOfCell/2+sizeOfCell/7, sizeOfCell/9);
+      bg.line(-sizeOfCell/2, sizeOfCell/6, sizeOfCell/6, sizeOfCell/6);
+      bg.line(-sizeOfCell/2, -sizeOfCell/6, sizeOfCell/6, -sizeOfCell/6);
 		}
 
 		if (roads[2]) {
-			bg.rect(-sizeOfCell/6, -sizeOfCell/6, sizeOfCell/2+sizeOfCell/6, sizeOfCell/9);
-			bg.rect(-sizeOfCell/6, sizeOfCell/18, sizeOfCell/2+sizeOfCell/6, sizeOfCell/9);
+      bg.line(sizeOfCell/2, sizeOfCell/6, -sizeOfCell/6, sizeOfCell/6);
+      bg.line(sizeOfCell/2, -sizeOfCell/6, -sizeOfCell/6, -sizeOfCell/6);
 		}
 
 		switch (state) {
@@ -141,5 +142,14 @@ class Cell {
 
   String toString() {
     return "x: " + x + " y: " + y + " State: " + state;
+  }
+
+  void translateToCell() {
+    pushMatrix();
+    translate(x*sizeOfCell + sizeOfCell/2, y*sizeOfCell + sizeOfCell/2);
+  }
+
+  void transalteEnd() {
+    popMatrix();
   }
 }

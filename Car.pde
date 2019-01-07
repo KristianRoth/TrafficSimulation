@@ -5,25 +5,60 @@ class Car {
     ArrayList<Cell> junctions;
     Cell start;
     Cell end;
-    Cell[] route;
+    ArrayList<Cell> route;
+    float x, y;
+    float vel = 1.3;
+
+    boolean arrived = false;
 
     Car(World world) {
-      println("Init Car");
       this.world = world;
       this.cells = world.getCells();
       this.cities = world.getCities();
       this.junctions = world.getJunctions();
 
       start = cities[floor(random(cities.length))];
-      end = cities[floor(random(cities.length))];
+      do {
+        end = cities[floor(random(cities.length))];
+      } while(end == start);
 
-      start.highlite(true);
-      end.highlite(true);
-
-      println(start);
-      println(end);
+      route = getRoute();
+      x = start.x*sizeOfCell + sizeOfCell/2 + 2*sizeOfCell/18;
+      y = start.y*sizeOfCell + sizeOfCell/2;
 
 
+    }
+
+    boolean arrived() {
+      return arrived;
+    }
+
+    void draw() {
+      fill(0, 0, 255);
+      stroke(255, 0, 0);
+      strokeWeight(2);
+      ellipse(x, y, sizeOfCell/16, sizeOfCell/16);
+    }
+
+    void update() {
+      if (route.size() == 1) {
+        arrived = true;
+        return;
+      }
+      Cell currentCell = route.get(0);
+      Cell nextCell = route.get(1);
+      x += (nextCell.x - currentCell.x)*vel;
+      y += (nextCell.y - currentCell.y)*vel;
+      float[] subPos = getSubPos();
+      if (abs(subPos[0]) > sizeOfCell || abs(subPos[1]) > sizeOfCell) {
+        route.remove(currentCell);
+
+      }
+    }
+
+    float[] getSubPos() {
+      Cell currentCell = route.get(0);
+      return new float[]{x - currentCell.x*sizeOfCell - sizeOfCell/2, y - currentCell.y*sizeOfCell - sizeOfCell/2};
     }
 
     ArrayList<Cell> getRoute() {
@@ -37,7 +72,6 @@ class Car {
 
 
       if (tail == end) {
-        println("Route Found");
         return currentRoute;
       }
 
@@ -47,18 +81,13 @@ class Car {
     }
 
     ArrayList<Cell> getNextRoutes(ArrayList<Cell> head, ArrayList<Cell> nextSteps) {
-      println("nextSteps.size(): "+nextSteps.size());
       ArrayList<ArrayList<Cell>> routes = new ArrayList<ArrayList<Cell>>();
       for (Cell nextStep : nextSteps) {
         if (!head.contains(nextStep)) {
           ArrayList<Cell> copy = new ArrayList<Cell>(head);
           copy.add(nextStep);
-          println("*******Start");
-          println(head.size());
-          println(copy.size());
-          println("*******End");
           routes.add(getRoute(copy));
-        } 
+        }
       }
 
       return minRoute(routes);
@@ -69,7 +98,6 @@ class Car {
       ArrayList<Cell> min = null;
       for (ArrayList<Cell> route : routes) {
         if (route != null) {
-          println(route.size() + " < " + minLength);
           if (route.size() < minLength) {
             minLength = route.size();
             min = route;

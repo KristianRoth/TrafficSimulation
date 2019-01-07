@@ -5,6 +5,5 @@ class NeuralNetwork {
 
 	void draw() {
 		rect(10, 10, 100, 100);
-		println("test");
 	}
 }

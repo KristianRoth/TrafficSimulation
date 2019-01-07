@@ -4,14 +4,12 @@ int gridHeight;
 int gridWidth;
 
 void setup() {
-	noLoop();
 	size(1200, 600);
 	gridHeight = height/sizeOfCell;
 	gridWidth = width/sizeOfCell;
 
+  rebase();
 
-	world = new World();
-	println("test");
 	background(255);
 	frameRate(60);
 }
@@ -19,22 +17,23 @@ void setup() {
 
 void draw() {
 	background(255);
-	int s = 0;
-	while (true) {
-		world = new World();
-		if (world.isGood()) {
-			break;
-		}
-		s++;
-	}
-	println(s);
-
-  world.update();
+  for(int i = 0; i < 1; i++) {
+    world.update();
+  }
 	world.draw();
-	println(frameRate);
+}
+
+void rebase() {
+  while (true) {
+    world = new World();
+    if (world.isGood()) {
+      break;
+    }
+  }
+
+	world = new World();
 }
 
 void keyPressed() {
-  println("redraw");
-	redraw();
+	rebase();
 }

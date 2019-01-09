@@ -7,7 +7,7 @@ void setup() {
 	size(1200, 600);
 	gridHeight = height/sizeOfCell;
 	gridWidth = width/sizeOfCell;
-
+  randomSeed(1);
   rebase();
 
 	background(255);

@@ -113,7 +113,7 @@ class Cell {
 				break;
 			case JUNCTION:
 				bg.fill(255, 0, 255);
-				bg.ellipse(0, 0, sizeOfCell/2, sizeOfCell/2);
+				// bg.ellipse(0, 0, sizeOfCell/2, sizeOfCell/2);
 				break;
 			case ROAD:
 				bg.fill(0, 100, 0);

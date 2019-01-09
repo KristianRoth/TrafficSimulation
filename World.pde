@@ -3,9 +3,12 @@ class World {
 
 	int numberOfCities = 10;
 	int numberOfInitialJunctions = 3;
-  int numberOfCars = 10;
-  int minDistJunctions = 2;
+  int numberOfCars = 5;
+  int minDistJunctions = 4;
 	int minJunctions = 3;
+
+  boolean spawnNewCars = true;
+  int framesPerCar = 5;
 
 
 	Cell[][] cells = new Cell[gridWidth][gridHeight];
@@ -127,9 +130,10 @@ class World {
 	}
 
   void update() {
-
-    if (frameCount%5 == 0) {
-      cars.add(new Car(this));
+    if (spawnNewCars) {
+      if (frameCount%framesPerCar == 0) {
+        cars.add(new Car(this));
+      }
     }
     for (Car car : cars) {
       car.update();
